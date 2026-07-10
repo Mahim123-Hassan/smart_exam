@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "441026174450",
+    "project_id": "smart-exam-62afb",
+    "storage_bucket": "smart-exam-62afb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441026174450:android:4dcdbc0243e3f798851f6b",
+        "android_client_info": {
+          "package_name": "com.example.smart_exam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrgxOjJjsSILVltCpNnIw2NCm9MZ5ecWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
