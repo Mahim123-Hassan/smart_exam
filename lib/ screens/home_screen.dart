@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/dashboard_card.dart';
 import 'exam_screen.dart';
+import 'leaderboard_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -230,6 +231,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     const SizedBox(height: 25),
 
+                    SizedBox(
+                      width: double.infinity,
+                      height: 60,
+
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const LeaderboardScreen(),
+                            ),
+                          );
+                        },
+
+                        icon: const Icon(Icons.leaderboard),
+
+                        label: const Text(
+                          "Leaderboard",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+
+                          foregroundColor: Colors.white,
+
+                          elevation: 8,
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(20),
