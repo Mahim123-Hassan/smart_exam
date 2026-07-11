@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'result_screen.dart';
 
 class ExamScreen extends StatefulWidget {
   const ExamScreen({super.key});
@@ -215,7 +217,7 @@ class _ExamScreenState extends State<ExamScreen> {
                       ),
                     ),
 
-                    onPressed: () {
+                    onPressed: () async{
                       int score = 0;
 
                       for (int i = 0; i < questions.length; i++) {
@@ -224,30 +226,20 @@ class _ExamScreenState extends State<ExamScreen> {
                         }
                       }
 
-                      showDialog(
-                        context: context,
+                      final prefs = await SharedPreferences.getInstance();
 
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text("Exam Result"),
+                      String studentName =
+                          prefs.getString("studentName") ?? "Student";
 
-                            content: Text(
-                              "Your Score: $score/${questions.length}",
-
-                              style: const TextStyle(fontSize: 18),
-                            ),
-
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-
-                                child: const Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ResultScreen(
+                            studentName: studentName,
+                            score: score,
+                            totalQuestion: questions.length,
+                          ),
+                        ),
                       );
                     },
 
