@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/dashboard_card.dart';
 import 'exam_screen.dart';
 import 'leaderboard_screen.dart';
+import 'exam_history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -257,6 +258,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
+
+                          foregroundColor: Colors.white,
+
+                          elevation: 8,
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    SizedBox(
+                      width: double.infinity,
+                      height: 60,
+
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ExamHistoryScreen(),
+                            ),
+                          );
+                        },
+
+                        icon: const Icon(Icons.history),
+
+                        label: const Text(
+                          "Exam History",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
 
                           foregroundColor: Colors.white,
 
