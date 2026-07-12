@@ -203,8 +203,10 @@ class _ResultScreenState extends State<ResultScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-
-                      MaterialPageRoute(builder: (_) => const ExamScreen()),
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ExamScreen(selectedClass: "", selectedSubject: ""),
+                      ),
                     );
                   },
                 ),

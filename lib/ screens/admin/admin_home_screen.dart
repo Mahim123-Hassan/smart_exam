@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'add_question_screen.dart';
 import 'manage_question_screen.dart';
+import 'admin_login_screen.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
@@ -16,6 +18,26 @@ class AdminHomeScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: const Color(0xff6A11CB),
         foregroundColor: Colors.white,
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+
+              if (!context.mounted) return;
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const AdminLoginScreen(),
+                ),
+                    (route) => false,
+              );
+            },
+          ),
+        ],
       ),
 
       body: Padding(

@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_exam/%20screens/admin/admin_home_screen.dart';
-//import 'package:smart_exam/%20screens/admin/admin_home_screen.dart';
+import 'package:smart_exam/%20screens/admin/admin_login_screen.dart';
+import 'package:smart_exam/%20screens/screens/class_selection_screen.dart';
+
 
 import '../widgets/dashboard_card.dart';
 import 'exam_screen.dart';
 import 'leaderboard_screen.dart';
 import 'exam_history_screen.dart';
+//import 'package:smart_exam/screens/admin/admin_login_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -210,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const ExamScreen(),
+                              builder: (_) => const ClassSelectionScreen(),
                             ),
                           );
                         },
@@ -323,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) =>  AdminHomeScreen(),
+                              builder: (_) =>  const AdminLoginScreen(),
                             ),
                           );
                         },

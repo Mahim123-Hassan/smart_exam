@@ -18,7 +18,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
 
   bool isLoading = false;
 
-  String selectedClass = "7";
+  String selectedClass = "Class 7";
   String selectedSubject = "Bangla";
 
   @override
@@ -42,9 +42,19 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
                 border: OutlineInputBorder(),
               ),
               items: const [
-                DropdownMenuItem(value: "7", child: Text("Class 7")),
-                DropdownMenuItem(value: "8", child: Text("Class 8")),
-                DropdownMenuItem(value: "9", child: Text("Class 9")),
+                DropdownMenuItem(value: "Class 6", child: Text("Class 6")),
+                DropdownMenuItem(value: "Class 7", child: Text("Class 7")),
+                DropdownMenuItem(value: "Class 8", child: Text("Class 8")),
+                DropdownMenuItem(value: "Class 9", child: Text("Class 9")),
+                DropdownMenuItem(value: "Class 10", child: Text("Class 10")),
+                DropdownMenuItem(
+                  value: "HSC 1st Year",
+                  child: Text("HSC 1st Year"),
+                ),
+                DropdownMenuItem(
+                  value: "HSC 2nd Year",
+                  child: Text("HSC 2nd Year"),
+                ),
               ],
               onChanged: (value) {
                 setState(() {
@@ -64,7 +74,10 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
               items: const [
                 DropdownMenuItem(value: "Bangla", child: Text("Bangla")),
                 DropdownMenuItem(value: "English", child: Text("English")),
-                DropdownMenuItem(value: "Mathematics", child: Text("Mathematics")),
+                DropdownMenuItem(
+                  value: "Mathematics",
+                  child: Text("Mathematics"),
+                ),
                 DropdownMenuItem(value: "Science", child: Text("Science")),
                 DropdownMenuItem(value: "ICT", child: Text("ICT")),
               ],
@@ -153,12 +166,12 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
                 child: isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
                     : const Text(
-                  "Save Question",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                        "Save Question",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ),
           ],
@@ -166,6 +179,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
       ),
     );
   }
+
   Future<void> saveQuestion() async {
     if (questionController.text.trim().isEmpty ||
         option1Controller.text.trim().isEmpty ||
@@ -207,7 +221,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
       answerController.clear();
 
       setState(() {
-        selectedClass = "7";
+        selectedClass = "Class 7";
         selectedSubject = "Bangla";
         isLoading = false;
       });
@@ -224,10 +238,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Error: $e"),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
       );
     }
   }

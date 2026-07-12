@@ -7,7 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'result_screen.dart';
 
 class ExamScreen extends StatefulWidget {
-  const ExamScreen({super.key});
+  final String selectedClass;
+  final String selectedSubject;
+
+  const ExamScreen({
+    super.key,
+    required this.selectedClass,
+    required this.selectedSubject,
+  });
 
   @override
   State<ExamScreen> createState() => _ExamScreenState();
@@ -18,7 +25,7 @@ class _ExamScreenState extends State<ExamScreen> {
 
   Timer? timer;
 
-  ValueNotifier<int> timeNotifier =  ValueNotifier(1800);
+  ValueNotifier<int> timeNotifier = ValueNotifier(1800);
 
   @override
   void initState() {
@@ -51,6 +58,8 @@ class _ExamScreenState extends State<ExamScreen> {
 
     final snapshot = await FirebaseFirestore.instance
         .collection("questions")
+        .where("class", isEqualTo: widget.selectedClass)
+        .where("subject", isEqualTo: widget.selectedSubject)
         .get();
 
     var questions = snapshot.docs;
@@ -150,7 +159,11 @@ class _ExamScreenState extends State<ExamScreen> {
       ),
 
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("questions").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("questions")
+            .where("class", isEqualTo: widget.selectedClass)
+            .where("subject", isEqualTo: widget.selectedSubject)
+            .snapshots(),
 
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -158,10 +171,18 @@ class _ExamScreenState extends State<ExamScreen> {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text("No Question Found"));
+            return Center(
+              child: Text(
+                "No Question Found\nClass: ${widget.selectedClass}\nSubject: ${widget.selectedSubject}",
+                textAlign: TextAlign.center,
+              ),
+            );
           }
-
           var questions = snapshot.data!.docs;
+
+          for (var doc in questions) {
+            print(doc.data());
+          }
 
           return Column(
             children: [
@@ -174,16 +195,14 @@ class _ExamScreenState extends State<ExamScreen> {
                   itemBuilder: (context, index) {
                     var data = questions[index];
 
+                    print(data.data());
+
                     List options = [
                       data["option1"],
-
                       data["option2"],
-
                       data["option3"],
-
                       data["option4"],
                     ];
-
                     return Card(
                       elevation: 3,
 
