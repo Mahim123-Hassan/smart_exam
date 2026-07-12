@@ -8,15 +8,17 @@ class ResultScreen extends StatefulWidget {
   final String studentName;
   final int score;
   final int totalQuestion;
+  final String selectedClass;
+  final String selectedSubject;
 
   const ResultScreen({
     super.key,
-
     required this.studentName,
     required this.score,
     required this.totalQuestion,
+    required this.selectedClass,
+    required this.selectedSubject,
   });
-
   @override
   State<ResultScreen> createState() => _ResultScreenState();
 }
@@ -51,15 +53,12 @@ class _ResultScreenState extends State<ResultScreen> {
   Future<void> saveResult() async {
     await FirebaseFirestore.instance.collection("results").add({
       "studentName": widget.studentName,
-
+      "class": widget.selectedClass,
+      "subject": widget.selectedSubject,
       "score": widget.score,
-
       "totalQuestion": widget.totalQuestion,
-
       "percentage": percentage,
-
       "grade": grade,
-
       "date": DateTime.now(),
     });
 
@@ -204,8 +203,10 @@ class _ResultScreenState extends State<ResultScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (_) =>
-                            ExamScreen(selectedClass: "", selectedSubject: ""),
+                        builder: (_) => ExamScreen(
+                          selectedClass: widget.selectedClass,
+                          selectedSubject: widget.selectedSubject,
+                        ),
                       ),
                     );
                   },

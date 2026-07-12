@@ -83,6 +83,8 @@ class _ExamScreenState extends State<ExamScreen> {
           studentName: name,
           score: score,
           totalQuestion: questions.length,
+          selectedClass: widget.selectedClass,
+          selectedSubject: widget.selectedSubject,
         ),
       ),
     );

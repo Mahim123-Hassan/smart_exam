@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:smart_exam/%20screens/admin/student_result_screen.dart';
 
 import 'add_question_screen.dart';
 import 'manage_question_screen.dart';
@@ -63,6 +64,23 @@ class AdminHomeScreen extends StatelessWidget {
               icon: Icons.edit_note,
               color: Colors.orange,
               screen: const ManageQuestionScreen(),
+            ),
+            SizedBox(height: 20,),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.bar_chart),
+                label: const Text("Student Results"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const StudentResultScreen(),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
