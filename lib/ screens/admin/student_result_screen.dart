@@ -12,6 +12,7 @@ class _StudentResultScreenState extends State<StudentResultScreen> {
   TextEditingController searchController = TextEditingController();
 
   String searchText = "";
+  String selectedClass = "All";
 
   @override
   void dispose() {
@@ -50,6 +51,40 @@ class _StudentResultScreenState extends State<StudentResultScreen> {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: DropdownButtonFormField<String>(
+              value: selectedClass,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              items: const [
+                DropdownMenuItem(value: "All", child: Text("All Classes")),
+                DropdownMenuItem(value: "Class 6", child: Text("Class 6")),
+                DropdownMenuItem(value: "Class 7", child: Text("Class 7")),
+                DropdownMenuItem(value: "Class 8", child: Text("Class 8")),
+                DropdownMenuItem(value: "Class 9", child: Text("Class 9")),
+                DropdownMenuItem(value: "Class 10", child: Text("Class 10")),
+                DropdownMenuItem(
+                  value: "Inter 1st Year",
+                  child: Text("Inter 1st Year"),
+                ),
+                DropdownMenuItem(
+                  value: "Inter 2nd Year",
+                  child: Text("Inter 2nd Year"),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  selectedClass = value!;
+                });
+              },
+            ),
+          ),
+
+          const SizedBox(height: 10),
 
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
@@ -71,8 +106,8 @@ class _StudentResultScreenState extends State<StudentResultScreen> {
                     ),
                   );
                 }
-
                 var results = snapshot.data!.docs;
+
                 results = results.where((doc) {
                   var data = doc.data() as Map<String, dynamic>;
 
@@ -80,7 +115,14 @@ class _StudentResultScreenState extends State<StudentResultScreen> {
                       .toString()
                       .toLowerCase();
 
-                  return studentName.contains(searchText);
+                  String studentClass = data["class"].toString();
+
+                  bool matchName = studentName.contains(searchText);
+
+                  bool matchClass =
+                      selectedClass == "All" || studentClass == selectedClass;
+
+                  return matchName && matchClass;
                 }).toList();
 
                 return ListView.builder(
