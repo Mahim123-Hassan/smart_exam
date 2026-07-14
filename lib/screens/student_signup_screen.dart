@@ -25,7 +25,6 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
     confirmPasswordController.dispose();
     super.dispose();
   }
-
   Future<void> signUpStudent() async {
     if (nameController.text.trim().isEmpty ||
         emailController.text.trim().isEmpty ||
@@ -38,6 +37,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
       );
       return;
     }
+
     if (passwordController.text != confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -46,7 +46,52 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
       );
       return;
     }
+
+    try {
+      UserCredential userCredential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      await FirebaseFirestore.instance
+          .collection("students")
+          .doc(userCredential.user!.uid)
+          .set({
+        "name": nameController.text.trim(),
+        "email": emailController.text.trim(),
+        "class": selectedClass,
+        "uid": userCredential.user!.uid,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Account Created Successfully"),
+        ),
+      );
+      nameController.clear();
+      emailController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
+
+      setState(() {
+        selectedClass = "Class 6";
+      });
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? "Something went wrong"),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
   }
+
 
 
 
